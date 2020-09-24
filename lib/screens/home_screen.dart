@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery_ui/screens/restaurant_screen.dart';
 import 'package:flutter_food_delivery_ui/widgets/rating_stars.dart';
 import 'package:flutter_food_delivery_ui/widgets/receent_orders.dart';
 
@@ -15,76 +16,87 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> restaurantList = [];
     restaurants.forEach((Restaurant restaurant) {
       restaurantList.add(
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(
-              width: 1,
-              color: Colors.grey[200],
+        GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => RestaurantScreen(restaurant: restaurant),
             ),
           ),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image(
-                  height: 150,
-                  width: 150,
-                  image: AssetImage(restaurant.imageUrl),
-                  fit: BoxFit.cover,
-                ),
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                width: 1,
+                color: Colors.grey[200],
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        restaurant.name,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      RatingStars(restaurant.rating),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        restaurant.address,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        '0.2 miles away',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
+            ),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Hero(
+                    tag: restaurant.imageUrl,
+                    child: Image(
+                      height: 150,
+                      width: 150,
+                      image: AssetImage(restaurant.imageUrl),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          restaurant.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        RatingStars(rating: restaurant.rating),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          restaurant.address,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          '0.2 miles away',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -103,7 +115,12 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Food Delivery'),
         actions: [
           FlatButton(
-            onPressed: () => null,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => CartScreen(),
+              ),
+            ),
             child: Text(
               'Cart (${currentUser.cart.length})',
               style: TextStyle(

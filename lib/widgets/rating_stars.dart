@@ -8,7 +8,7 @@ var ratingStar = parser.get('star').code;
 class RatingStars extends StatelessWidget {
   final int rating;
 
-  RatingStars(this.rating);
+  RatingStars({this.rating});
 
   Widget build(BuildContext context) {
     String stars = '';
